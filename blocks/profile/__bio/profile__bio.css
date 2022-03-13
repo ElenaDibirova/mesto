@@ -1,3 +1,5 @@
-/* .profile__bio {
-  
-} */
+.profile__bio {
+  color: white;
+  font-size: 18px;
+  line-height: 21px;
+}
