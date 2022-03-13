@@ -1,4 +1,6 @@
 .root {
+    background-color: black;
+    padding: 45px 0 60px;
     font-family: "Inter", "Arial", sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -6,6 +8,5 @@
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
-    background-color: black;
   }
   

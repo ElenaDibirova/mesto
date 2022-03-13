@@ -1,5 +1,8 @@
 .profile__edit-button {
-  background-image: url(../../../images/profile__Edit-Button.svg);
+  background: url(../../../images/profile__Edit-Button.svg);
   width: 24px;
   height: 24px;
+  margin-left: 18px;
+  border: none;
+  cursor: pointer;
 }
