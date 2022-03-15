@@ -1,0 +1,28 @@
+.popup__close-button {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 32px;
+  height: 32px;
+}
+
+.popup__close-button::before {
+  position: absolute;
+  content: '';
+  height: 32px;
+  border-right: 4px solid white;
+  top: 8px;
+  transform: rotate(45deg);
+}
+
+.popup__close-button::after {
+  position: absolute;
+  content: '';
+  height: 32px;
+  border-right: 4px solid white;
+  top: 8px;
+  transform: rotate(-45deg);
+}
