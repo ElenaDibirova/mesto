@@ -7,3 +7,11 @@
   border: none;
   cursor: pointer;
 }
+
+@media screen and (max-width: 900px) {
+  .profile__add-button {
+    background: url(../../../images/profile__add_button_320.png);
+    margin: auto;
+    width: 282px;
+  }
+}

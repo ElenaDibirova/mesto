@@ -21,9 +21,3 @@
     grid-template-rows: repeat(6, 1fr);
   }
 }
-
-@media screen and (max-width: 320px) {
-  .elements {
-    margin-left: 19px;
-  }
-}

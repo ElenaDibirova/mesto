@@ -2,7 +2,16 @@
   background: url(../../../images/profile__Edit-Button.svg);
   width: 24px;
   height: 24px;
-  margin-left: 18px;
+  margin-left: 14px;
   border: none;
   cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+  .profile__edit-button {
+    background: url(../../../images/profile__edit_button_320.png);
+    width: 18px;
+    height: 18px;
+    margin-left: 0px;
+  }
 }
