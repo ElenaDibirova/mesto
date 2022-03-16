@@ -7,3 +7,7 @@
   cursor: pointer;
   margin: 25px 19px 32px 0;
 }
+
+.element__like:hover {
+  opacity: 0.8;
+}

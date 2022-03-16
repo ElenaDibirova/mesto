@@ -6,3 +6,10 @@
   margin-top: 30px;
   width: 358px;
 }
+
+@media screen and (max-width: 600px) {
+  .popup__bio-edit {
+    width: 238px;
+    margin-top: 35px;
+  }
+}

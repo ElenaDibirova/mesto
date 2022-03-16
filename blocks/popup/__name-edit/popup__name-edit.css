@@ -4,5 +4,11 @@
   outline: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   width: 358px;
-  margin-top: 30px;
+  margin-top: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__name-edit {
+    width: 238px;
+  }
 }

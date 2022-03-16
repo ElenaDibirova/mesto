@@ -4,3 +4,10 @@
   line-height: 22px;
   font-weight: 400;
 }
+
+@media screen and (max-width: 600px) {
+  .popup__save-button_text {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

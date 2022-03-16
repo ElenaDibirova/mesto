@@ -26,3 +26,26 @@
   top: 8px;
   transform: rotate(-45deg);
 }
+
+.popup__close-button:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__close-button {
+    right: 0;
+    top: -40px;
+    width: 24px;
+    height: 24px;
+  }
+  .popup__close-button::before {
+    border-right: 2px solid white;
+    top: 3px;
+    height: 24px;
+  }
+  .popup__close-button::after {
+    border-right: 2px solid white;
+    top: 3px;
+    height: 24px;
+  }
+}
