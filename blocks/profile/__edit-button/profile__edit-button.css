@@ -5,6 +5,8 @@
   margin-left: 14px;
   border: none;
   cursor: pointer;
+  margin-top: 35px;
+  grid-area: edit;
 }
 
 .profile__edit-button:hover {
@@ -17,5 +19,8 @@
     width: 18px;
     height: 18px;
     margin-left: 0px;
+    /* position: relative;
+    left: 114px;
+    bottom: 118px; */
   }
 }

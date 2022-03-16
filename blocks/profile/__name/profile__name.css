@@ -4,6 +4,7 @@
   line-height: 1;
   font-weight: 500;
   margin: 22px 0 12px 0;
+  grid-area: name;
 }
 
 @media screen and (max-width: 900px) {
