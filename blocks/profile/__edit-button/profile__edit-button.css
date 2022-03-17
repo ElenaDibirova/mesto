@@ -2,10 +2,10 @@
   background: url(../../../images/profile__Edit-Button.svg);
   width: 24px;
   height: 24px;
-  margin-left: 14px;
+  margin-left: 24px;
   border: none;
   cursor: pointer;
-  margin-top: 35px;
+  margin-top: 34px;
   grid-area: edit;
 }
 
@@ -18,9 +18,7 @@
     background: url(../../../images/profile__edit_button_320.png);
     width: 18px;
     height: 18px;
-    margin-left: 0px;
-    /* position: relative;
-    left: 114px;
-    bottom: 118px; */
+    align-self: end;
+    margin: 0 0 7px 6px;
   }
 }

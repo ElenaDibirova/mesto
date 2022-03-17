@@ -6,7 +6,6 @@
   margin-right: 0;
   border: none;
   cursor: pointer;
-  grid-area: add;
 }
 
 .profile__add-button:hover {

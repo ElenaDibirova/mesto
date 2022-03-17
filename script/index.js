@@ -10,7 +10,7 @@ function openPopup () {
   popupElement.classList.add('popup_opened');
   document.addEventListener('keyup', onDocumentKeyUp);
 
-  nameInput.value = document.querySelector('.profile__name').textContent.trim()
+  nameInput.value = document.querySelector('.profile__name').textContent
   jobInput.value = document.querySelector('.profile__bio').textContent
 }
 

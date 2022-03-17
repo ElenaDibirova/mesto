@@ -15,59 +15,61 @@
     
      <main class="content">
 
-    <section class="profile">
+    <section aria-label="Профиль" class="profile">
       <div class="profile__avatar"></div>
       <div class="profile__info">
-        <p class="profile__name">Жак-Ив Кусто</p>
+        <div class="profile__edit-block">
+          <p class="profile__name">Жак-Ив Кусто</p>
+          <input type="button" value=" " class="profile__edit-button">
+      </div>
         <p class="profile__bio">Исследователь океана</p>
       </div>
-      <input type="button" class="profile__edit-button"></input>
-      <input type="button" class="profile__add-button"></input>
+      <input type="button" value=" " class="profile__add-button">
     </section>
 
-    <section class="elements">
-      <figure class="element">
+    <section aria-label="Профиль" class="elements">
+      <div class="element">
         <img src="./images/element__karachaevsk.jpg" class="element__img" alt="Карачаевск">
         <div class="element__info">
-          <figcaption class="element__name">Карачаевск</figcaption>
-          <input type="button" class="element__like"></input>
+          <p class="element__name">Карачаевск</p>
+          <button class="element__like"></button>
         </div>
-      </figure>
-      <figure class="element">
+      </div>
+      <div class="element">
         <img src="./images/element__elbrus.png" class="element__img" alt="Гора Эльбрус">
         <div class="element__info">
-          <figcaption class="element__name">Гора Эльбрус</figcaption>
-          <input type="button" class="element__like"></input>
+          <p class="element__name">Гора Эльбрус</p>
+          <button class="element__like"></button>
         </div>
-      </figure>
-      <figure class="element">
+      </div>
+      <div class="element">
         <img src="./images/element__dombai.png" class="element__img" alt="Домбай">
         <div class="element__info">
-          <figcaption class="element__name">Домбай</figcaption>
-          <input type="button" class="element__like"></input>
+          <p class="element__name">Домбай</p>
+          <button class="element__like"></button>
         </div>
-      </figure>
-      <figure class="element">
+      </div>
+      <div class="element">
         <img src="./images/element__elbrus.png" class="element__img" alt="Гора Эльбрус">
         <div class="element__info">
-          <figcaption class="element__name">Гора Эльбрус</figcaption>
-          <input type="button" class="element__like"></input>
+          <p class="element__name">Гора Эльбрус</p>
+          <button class="element__like"></button>
         </div>
-      </figure>
-      <figure class="element">
+      </div>
+      <div class="element">
         <img src="./images/element__dombai.png" class="element__img" alt="Домбай">
         <div class="element__info">
-          <figcaption class="element__name">Домбай</figcaption>
-          <input type="button" class="element__like"></input>
+          <p class="element__name">Домбай</p>
+          <button class="element__like"></button>
         </div>
-      </figure>
-      <figure class="element">
+      </div>
+      <div class="element">
         <img src="./images/element__karachaevsk.jpg" class="element__img" alt="Карачаевск">
         <div class="element__info">
-          <figcaption class="element__name">Карачаево-Черкесия</figcaption>
-          <input type="button" class="element__like"></input>
+          <p class="element__name">Карачаево-Черкесия</p>
+          <button class="element__like"></button>
         </div>
-      </figure>
+      </div>
     </section>
 
     </main>
@@ -80,9 +82,9 @@
   <div class="popup">
     <form class="popup__window">
       <p class="popup__title">Редактировать профиль</p>
-      <button class="popup__close-button"></button>
-      <input type="text" class="popup__name-edit"></input>
-      <input type="text" class="popup__bio-edit"></input>
+      <button type="button" class="popup__close-button"></button>
+      <input type="text" class="popup__name-edit">
+      <input type="text" class="popup__bio-edit">
       <button type="submit" class="popup__save-button">
         <span class="popup__save-button_text">Сохранить</span>
     </button>

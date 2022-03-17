@@ -1,11 +1,4 @@
 .profile__info {
   display: flex;
   flex-direction: column;
-  margin: 0;
-}
-
-@media screen and (max-width: 900px) {
-  .profile__info {
-    margin: auto;
-  }
 }
