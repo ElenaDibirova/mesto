@@ -12,4 +12,4 @@
 
 В дальнейшем можно добвать счетчик лайков.
 
-[Ссылка проектa на Github Pages](https://elenadibirova.github.io/russian-travel/)
+[Ссылка проектa на Github Pages](https://elenadibirova.github.io/mesto/index.html)

@@ -6,7 +6,8 @@
   border: none;
   cursor: pointer;
   margin-top: 34px;
-  grid-area: edit;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .profile__edit-button:hover {
