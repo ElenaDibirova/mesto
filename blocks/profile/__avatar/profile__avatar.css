@@ -1,8 +1,9 @@
 .profile__avatar {
-  background-image: url(../../../images/profile__avatar.png);
+  background-image: url(../../../images/profile__avatar.jpg);
   width: 120px;
   height: 120px;
   margin-right: 30px;
+  border-radius: 50%;
 }
 
 @media screen and (max-width: 900px) {

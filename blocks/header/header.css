@@ -3,16 +3,5 @@
   flex-direction: column;
   max-width: 880px;
   margin: auto;
-}
-
-@media screen and (max-width: 900px) {
-  .header {
-    max-width: 581px;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .header {
-    max-width: 264px;
-  }
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
 }

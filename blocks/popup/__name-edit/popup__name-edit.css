@@ -5,6 +5,11 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   width: 358px;
   margin-top: 0;
+  margin-bottom: 28px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  padding-bottom: 10px;
 }
 
 @media screen and (max-width: 600px) {

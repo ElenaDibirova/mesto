@@ -14,7 +14,7 @@
   content: '';
   height: 32px;
   border-right: 4px solid white;
-  top: 8px;
+  top: 0;
   transform: rotate(45deg);
 }
 
@@ -23,7 +23,7 @@
   content: '';
   height: 32px;
   border-right: 4px solid white;
-  top: 8px;
+  top: 0;
   transform: rotate(-45deg);
 }
 
@@ -34,7 +34,6 @@
 @media screen and (max-width: 600px) {
   .popup__close-button {
     right: 0;
-    top: -40px;
     width: 24px;
     height: 24px;
   }
