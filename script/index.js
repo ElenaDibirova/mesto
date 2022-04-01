@@ -1,9 +1,13 @@
-const popupElement = document.querySelector('.popup');
+const popupProfileElement = document.querySelector('.popup__profile');
+const popupPlaceElement = document.querySelector('.popup__place');
 const editButton = document.querySelector('.profile__edit-button');
-const closeButton = popupElement.querySelector('.popup__close-button');
-let formElement = popupElement.querySelector('.popup__window')
-let nameInput = formElement.querySelector('.popup__edit_type_name');
-let jobInput = formElement.querySelector('.popup__edit_type_bio');
+const addButton = document.querySelector('.profile__add-button');
+const closeProfileButton = popupProfileElement.querySelector('.popup__close-button_profile');
+const closePlaceButton = popupPlaceElement.querySelector('.popup__close-button_place');
+let formProfileElement = popupProfileElement.querySelector('.popup__window_profile');
+let formPlaceElement = popupPlaceElement.querySelector('.popup__window_place')
+let nameInput = formProfileElement.querySelector('.popup__edit_type_name');
+let jobInput = formProfileElement.querySelector('.popup__edit_type_bio');
 let profileName = document.querySelector('.profile__name');
 let profileBio = document.querySelector('.profile__bio');
 // const ESC_KEY = "Escape";
@@ -52,23 +56,23 @@ elements.forEach(function(el) {
   section.append(cardElement);
 });
 
-function openPopup () {
+function openPopupProfile () {
   nameInput.value = profileName.textContent
   jobInput.value = profileBio.textContent
-  popupElement.classList.add('popup_opened');
+  popupProfileElement.classList.add('popup_opened');
   // document.addEventListener('keyup', onDocumentKeyUp);
 }
 
-function closePopup() {
-  popupElement.classList.remove('popup_opened');
+function closeProfilePopup() {
+  popupProfileElement.classList.remove('popup_opened');
   // document.removeEventListener('keyup', onDocumentKeyUp);
 }
 
-function formSubmitHandler (evt) {
+function formSubmitProfileHandler (evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value
   profileBio.textContent = jobInput.value
-  closePopup();
+  closeProfilePopup();
 }
 
 // function onDocumentKeyUp (event) {
@@ -77,6 +81,23 @@ function formSubmitHandler (evt) {
 //   }
 // }
 
-formElement.addEventListener('submit', formSubmitHandler);
-editButton.addEventListener('click', openPopup);  
-closeButton.addEventListener('click', closePopup);
+formProfileElement.addEventListener('submit', formSubmitProfileHandler);
+editButton.addEventListener('click', openPopupProfile);  
+closeProfileButton.addEventListener('click', closeProfilePopup);
+
+
+function openPopupPlace() {
+  popupPlaceElement.classList.add('popup_opened');
+}
+
+function closePlacePopup() {
+  popupPlaceElement.classList.remove('popup_opened');
+}
+
+function formSubmitPlaceHandler(evt) {
+  // TODO add card
+}
+
+formPlaceElement.addEventListener('submit', formSubmitPlaceHandler)
+addButton.addEventListener('click', openPopupPlace);
+closePlaceButton.addEventListener('click', closePlacePopup);
