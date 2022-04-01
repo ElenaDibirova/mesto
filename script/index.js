@@ -8,6 +8,50 @@ let profileName = document.querySelector('.profile__name');
 let profileBio = document.querySelector('.profile__bio');
 // const ESC_KEY = "Escape";
 
+const elements = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+// add cards to foto section
+let section = document.querySelector('.elements');
+let cardTemplate = section.querySelector('.element');
+section.removeChild(cardTemplate);
+
+elements.forEach(function(el) {
+  const cardElement = cardTemplate.cloneNode(true);
+  let cardImg = cardElement.querySelector('.element__img');
+  cardImg.src = el.link;
+  cardImg.alt = el.name;
+
+  let cardName = cardElement.querySelector('.element__name');
+  cardName.textContent = el.name;
+
+  section.append(cardElement);
+});
+
 function openPopup () {
   nameInput.value = profileName.textContent
   jobInput.value = profileBio.textContent
