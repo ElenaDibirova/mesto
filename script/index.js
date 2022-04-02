@@ -12,6 +12,7 @@ let profileName = document.querySelector('.profile__name');
 let profileBio = document.querySelector('.profile__bio');
 const placeName = formPlaceElement.querySelector('.popup__edit_type_place');
 const placeLink = formPlaceElement.querySelector('.popup__edit_type_link');
+
 // const ESC_KEY = "Escape";
 
 const elements = [
@@ -41,6 +42,8 @@ const elements = [
   }
 ];
 
+
+
 // add cards to foto section
 let section = document.querySelector('.elements');
 let cardTemplate = section.querySelector('.element');
@@ -56,7 +59,11 @@ elements.forEach(function(el) {
   cardName.textContent = el.name;
 
   section.append(cardElement);
-});
+
+  let likeBtn = cardElement.querySelector('.element__like');
+  
+  likeBtn.addEventListener('click', cardLike);
+})
 
 function openPopupProfile () {
   nameInput.value = profileName.textContent
@@ -83,6 +90,10 @@ function formSubmitProfileHandler (evt) {
 //   }
 // }
 
+function cardLike(event) {
+  event.currentTarget.classList.toggle('element__like_active');
+}
+
 formProfileElement.addEventListener('submit', formSubmitProfileHandler);
 editButton.addEventListener('click', openPopupProfile);  
 closeProfileButton.addEventListener('click', closeProfilePopup);
@@ -104,6 +115,9 @@ function formSubmitPlaceHandler(evt) {
   newCardImg.alt = placeName.value;
   let newCardName = newCardElement.querySelector('.element__name');
   newCardName.textContent = placeName.value;
+
+  let likeBtn = newCardElement.querySelector('.element__like');
+  likeBtn.addEventListener('click', cardLike);
 
   section.prepend(newCardElement);
   closePlacePopup();
