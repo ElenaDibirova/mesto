@@ -10,6 +10,8 @@ let nameInput = formProfileElement.querySelector('.popup__edit_type_name');
 let jobInput = formProfileElement.querySelector('.popup__edit_type_bio');
 let profileName = document.querySelector('.profile__name');
 let profileBio = document.querySelector('.profile__bio');
+const placeName = formPlaceElement.querySelector('.popup__edit_type_place');
+const placeLink = formPlaceElement.querySelector('.popup__edit_type_link');
 // const ESC_KEY = "Escape";
 
 const elements = [
@@ -85,7 +87,6 @@ formProfileElement.addEventListener('submit', formSubmitProfileHandler);
 editButton.addEventListener('click', openPopupProfile);  
 closeProfileButton.addEventListener('click', closeProfilePopup);
 
-
 function openPopupPlace() {
   popupPlaceElement.classList.add('popup_opened');
 }
@@ -95,7 +96,20 @@ function closePlacePopup() {
 }
 
 function formSubmitPlaceHandler(evt) {
-  // TODO add card
+  evt.preventDefault();
+  const newCardElement = cardTemplate.cloneNode(true);
+
+  let newCardImg = newCardElement.querySelector('.element__img');
+  newCardImg.src = placeLink.value;
+  newCardImg.alt = placeName.value;
+  let newCardName = newCardElement.querySelector('.element__name');
+  newCardName.textContent = placeName.value;
+
+  section.prepend(newCardElement);
+  closePlacePopup();
+
+  placeName.value = '';
+  placeLink.value = '';
 }
 
 formPlaceElement.addEventListener('submit', formSubmitPlaceHandler)
