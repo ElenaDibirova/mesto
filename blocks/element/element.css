@@ -3,6 +3,7 @@
   width: 282px;
   border-radius: 10px;
   margin: 0;
+  position: relative;
 }
 
 @media screen and (max-width: 900px) {

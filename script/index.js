@@ -60,9 +60,11 @@ elements.forEach(function(el) {
 
   section.append(cardElement);
 
-  let likeBtn = cardElement.querySelector('.element__like');
-  
+  let likeBtn = cardElement.querySelector('.element__like');  
   likeBtn.addEventListener('click', cardLike);
+
+  let removeBtn = cardElement.querySelector('.element__remove');
+  removeBtn.addEventListener('click', cardRemove);
 })
 
 function openPopupProfile () {
@@ -94,6 +96,10 @@ function cardLike(event) {
   event.currentTarget.classList.toggle('element__like_active');
 }
 
+function cardRemove(event) {
+  event.currentTarget.parentElement.remove();
+}
+
 formProfileElement.addEventListener('submit', formSubmitProfileHandler);
 editButton.addEventListener('click', openPopupProfile);  
 closeProfileButton.addEventListener('click', closeProfilePopup);
@@ -118,6 +124,9 @@ function formSubmitPlaceHandler(evt) {
 
   let likeBtn = newCardElement.querySelector('.element__like');
   likeBtn.addEventListener('click', cardLike);
+
+  let removeBtn = newCardElement.querySelector('.element__remove');
+  removeBtn.addEventListener('click', cardRemove);
 
   section.prepend(newCardElement);
   closePlacePopup();
