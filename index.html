@@ -29,7 +29,7 @@
     <section aria-label="Foto" class="elements">
       <div class="element">
         <button type="button" class="element__remove"></button>
-        <img  class="element__img">
+        <img class="element__img">
         <div class="element__info">
           <h2 class="element__name"></h2>
           <button type="button" class="element__like"></button>
@@ -60,7 +60,7 @@
 
   <div class="popup popup__place">
     <div class="popup__container">
-      <form name="Edit_name_and_bio" class="popup__window popup__window_place">
+      <form name="Add_new_place" class="popup__window popup__window_place">
         <button type="button" class="popup__close-button popup__close-button_place"></button>
         <h2 class="popup__title">Новое место</h2>
         <input type="text" placeholder="Название" class="popup__edit popup__edit_type_place popup__edit_first">
@@ -71,6 +71,15 @@
       </form>
     </div>
   </div>
+
+  <div class="popup popup__pic">
+    <div class="popup__container">
+      <button type="button" class="popup__close-button popup__close-button_pic"></button>
+      <img class="popup__image">
+      <p class="popup__text"></p >
+    </div>
+  </div>
+
   <script src="./script/index.js"></script>
 </body>
 </html>
