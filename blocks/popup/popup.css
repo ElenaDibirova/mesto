@@ -8,7 +8,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 350ms 0ms ease, visibility 0ms 350ms;
+  -webkit-transition: opacity 350ms 0ms ease, visibility 0ms 350ms;
 }

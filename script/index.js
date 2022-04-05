@@ -44,7 +44,6 @@ const elements = [
   }
 ];
 
-// add cards to foto section
 let section = document.querySelector('.elements');
 let cardTemplate = section.querySelector('.element');
 section.removeChild(cardTemplate);
@@ -126,8 +125,6 @@ function formSubmitPlaceHandler(evt) {
   let newCardName = newCardElement.querySelector('.element__name');
   newCardName.textContent = placeName.value;
 
-  
-
   let likeBtn = newCardElement.querySelector('.element__like');
   likeBtn.addEventListener('click', cardLike);
 
@@ -145,17 +142,6 @@ formPlaceElement.addEventListener('submit', formSubmitPlaceHandler)
 addButton.addEventListener('click', openPopupPlace);
 closePlaceButton.addEventListener('click', closePlacePopup);
 closePopupButton.addEventListener('click', closePopupPic);
-
-// popup image
-// elements.forEach(function(el) {
-//   const cardElement = cardTemplate.cloneNode(true);
-//   let cardPic = cardElement.querySelector('.popup__image');
-//   cardPic.src = el.link;
-//   cardPic.alt = el.name;
-
-//   let popupName = cardElement.querySelector('.popup__text');
-//   popupName.textContent = el.name;
-// });
 
 function openPopupPic(event) {
   popupPicElement.classList.add('popup_opened');
