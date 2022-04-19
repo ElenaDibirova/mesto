@@ -33,17 +33,23 @@ function openPopup(popup) {
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  clearError(popup);
 }
 
 elements.forEach(function(el) {
   addCardToContainer(section, createCard(el.link, el.name));
 })
 
-function openPopupProfile () {
+function openPlacePopup() {
+  placeName.value = '';
+  placeLink.value = '';
+  openPopup(popupPlaceElement);
+}
+
+function openProfilePopup () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileBio.textContent;
   openPopup(popupProfileElement);
-  clearError(formProfileElement);
 }
 
 function formSubmitProfileHandler (evt) {
@@ -99,112 +105,86 @@ function openPopupPic(event) {
 
 section.removeChild(cardTemplate);
 
-formProfileElement.addEventListener('submit', formSubmitProfileHandler);
-editButton.addEventListener('click', openPopupProfile);  
-closeProfileButton.addEventListener('click', () => closePopup(popupProfileElement));
-formPlaceElement.addEventListener('submit', handleCardRendering)
-addButton.addEventListener('click', () => openPopup(popupPlaceElement));
-closePlaceButton.addEventListener('click', () => closePopup(popupPlaceElement));
-closePopupButton.addEventListener('click', () => closePopup(popupPicElement));
-
-
-
-// Вынесем все необходимые элементы формы в константы
-// formProfileElement //const formElement = document.querySelector('.form');
-// nameInput //const formInput = formElement.querySelector('.form__input');
-// const formError = formProfileElement.querySelector(`.${nameInput.id}-error`); //уникальный код ошибки
-
-// Функция, которая добавляет класс с ошибкой
-const showInputError = (formProfileElement, element, errorMessage) => {
-  const formError = formProfileElement.querySelector(`.${element.id}-error`);
-  element.classList.add('popup__error');
-  formError.textContent = errorMessage;
-  formError.classList.add('popup__edit-error_active');
+const showInputError = (form, input, errorMessage) => {
+  const errorSpan = form.querySelector(`.${input.id}-error`);
+  input.classList.add('popup__error');
+  errorSpan.textContent = errorMessage;
+  errorSpan.classList.add('popup__edit-error_active');
 };
 
-// Функция, которая удаляет класс с ошибкой
-const hideInputError = (formProfileElement, element) => {
-  const formError = formProfileElement.querySelector(`.${element.id}-error`);
-  element.classList.remove('popup__error');
-  formError.classList.remove('popup__edit-error_active');
-  formError.textContent = '';
+const hideInputError = (form, input) => {
+  const errorSpan = form.querySelector(`.${input.id}-error`);
+  input.classList.remove('popup__error');
+  errorSpan.classList.remove('popup__edit-error_active');
+  errorSpan.textContent = '';
 };
-
-//создадим функцию очистки попапа от ошибок при открытии
-//   //в ф-ции клирэррор нужно удалить класс popup__error из input, и класс popup__edit-error_active from span.
 
 const clearError = (popup) => {
-  const nameList = Array.from(popup.querySelectorAll('.popup__edit'));
-  const bioList = Array.from(popup.querySelectorAll('.popup__edit-error'));
+  const inputList = Array.from(popup.querySelectorAll('.popup__edit'));
+  const errorSpanList = Array.from(popup.querySelectorAll('.popup__edit-error'));
 
-  nameList.forEach((popup) => {
-    popup.classList.remove('popup__error');
+  inputList.forEach((input) => {
+    input.classList.remove('popup__error');
   });
 
-  bioList.forEach((popup) => {
-    popup.classList.add('popup__edit-error_active');
-    popup.textContent = '';
+  errorSpanList.forEach((errorSpan) => {
+    errorSpan.classList.add('popup__edit-error_active');
+    errorSpan.textContent = '';
   });
-
+  const saveButton = popup.querySelector('.popup__save-button');
   saveButton.classList.remove('popup__save-button_inactive');
-
 }
 
-// Функция, которая проверяет валидность поля
-const isValid = (formProfileElement, input) => {
+const isValid = (form, input) => {
+  const saveButton = form.querySelector('.popup__save-button');
   if (!input.validity.valid) {
-    // Если поле не проходит валидацию, покажем ошибку
-    showInputError(formProfileElement, input, input.validationMessage);
+    showInputError(form, input, input.validationMessage);
     saveButton.classList.add('popup__save-button_inactive');
-
+    saveButton.disabled = true;
   } else {
-    // Если проходит, скроем
-    hideInputError(formProfileElement, input);
-    saveButton.classList.remove('popup__save-button_inactive');
+    hideInputError(form, input);
+    if (isAllInputValid(form)) {
+      saveButton.classList.remove('popup__save-button_inactive');
+      saveButton.disabled = false;
+    }
   }
 };
+
+const isAllInputValid = (form) => {
+  const inputList = Array.from(form.querySelectorAll('.popup__edit'));
+  return inputList.every((input) => input.validity.valid);
+}  
  
-formProfileElement.addEventListener('submit', function (evt) {
-  // Отменим стандартное поведение по сабмиту
-  evt.preventDefault();
-});
+const setEventListeners = (form) => {
+  const inputList = Array.from(form.querySelectorAll('.popup__edit'));
 
-const setEventListeners = (formProfileElement) => {
-  // Находим все поля внутри формы,
-  // сделаем из них массив методом Array.from
-  const inputList = Array.from(formProfileElement.querySelectorAll('.popup__edit'));
-
-  // Обойдём все элементы полученной коллекции
   inputList.forEach((input) => {
-    // каждому полю добавим обработчик события input
     input.addEventListener('input', () => {
-      // Внутри колбэка вызовем isValid,
-      // передав ей форму и проверяемый элемент
-      isValid(formProfileElement, input)
+      isValid(form, input)
     });
   });
 }; 
 
 const enableValidation = () => {
-  // Найдём все формы с указанным классом в DOM,
-  // сделаем из них массив методом Array.from
-  const formList = Array.from(document.querySelectorAll('.popup__window_profile'));
+  const formList = Array.from(document.querySelectorAll('.popup__window'));
 
-  // Переберём полученную коллекцию
-  formList.forEach((formProfileElement) => {
-    formProfileElement.addEventListener('submit', (evt) => {
-      // У каждой формы отменим стандартное поведение
+  formList.forEach((form) => {
+    form.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
-
-    // Для каждой формы вызовем функцию setEventListeners,
-    // передав ей элемент формы
-    setEventListeners(formProfileElement);
+    setEventListeners(form);
   });
 };
 
-// Вызовем функцию
-enableValidation();
+formProfileElement.addEventListener('submit', formSubmitProfileHandler);
+editButton.addEventListener('click', openProfilePopup);  
+closeProfileButton.addEventListener('click', () => closePopup(popupProfileElement));
+formPlaceElement.addEventListener('submit', handleCardRendering)
+addButton.addEventListener('click', openPlacePopup);
+closePlaceButton.addEventListener('click', () => closePopup(popupPlaceElement));
+closePopupButton.addEventListener('click', () => closePopup(popupPicElement));
+formProfileElement.addEventListener('submit', function (evt) {
+  evt.preventDefault();
+});
 
-// Вызовем функцию isValid на каждый ввод символа
-// nameInput.addEventListener('input', isValid);
+enableValidation();
