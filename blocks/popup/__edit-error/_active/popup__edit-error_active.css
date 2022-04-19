@@ -1,0 +1,16 @@
+.popup__edit-error_active {
+display: flex;
+align-self: flex-start;
+margin-left: 34px;
+color: red;
+visibility: visible;
+font-size: 12px;
+line-height: 14px;
+font-weight: 400;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__edit-error_active {
+    margin-left: 20px;
+  }
+}
