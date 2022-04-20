@@ -7,7 +7,7 @@ const closeProfileButton = popupProfileElement.querySelector('.popup__close-butt
 const closePlaceButton = popupPlaceElement.querySelector('.popup__close-button_place');
 const closePopupButton = popupPicElement.querySelector('.popup__close-button_pic');
 const formProfileElement = popupProfileElement.querySelector('.popup__window_profile');
-const formPlaceElement = popupPlaceElement.querySelector('.popup__window_place')
+const formPlaceElement = popupPlaceElement.querySelector('.popup__window_place');
 const nameInput = formProfileElement.querySelector('.popup__edit_type_name');
 const jobInput = formProfileElement.querySelector('.popup__edit_type_bio');
 const profileName = document.querySelector('.profile__name');
@@ -18,6 +18,14 @@ const section = document.querySelector('.elements');
 const cardTemplate = section.querySelector('.element');
 const popupPic = document.querySelector('.popup__image');
 const saveButton = document.querySelector('.popup__save-button');
+const ESC_KEY = "Escape";
+const overlayList = Array.from(document.querySelectorAll('.popup'));
+
+function onDocumentKeyUp (event, popup) {
+  if (event.key === ESC_KEY) {
+    closePopup(popup);
+  }
+}
 
 const handleLikeButton = (event) => {
   event.currentTarget.classList.toggle('element__like_active');
@@ -29,11 +37,15 @@ const handleRemoveButton = (event) => {
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keyup', (evt) => onDocumentKeyUp(evt, popup));
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  clearError(popup);
+  if (!popup.classList.contains('popup_pic')) {
+    clearError(popup);
+  }
+  document.removeEventListener('keyup', (evt) => onDocumentKeyUp(evt, popup));
 }
 
 elements.forEach(function(el) {
@@ -105,19 +117,19 @@ function openPopupPic(event) {
 
 section.removeChild(cardTemplate);
 
-const showInputError = (form, input, errorMessage) => {
-  const errorSpan = form.querySelector(`.${input.id}-error`);
-  input.classList.add('popup__error');
-  errorSpan.textContent = errorMessage;
-  errorSpan.classList.add('popup__edit-error_active');
-};
+// const showInputError = (form, input, errorMessage, validationSettings) => {
+//   const errorSpan = form.querySelector(`.${input.id}-error`);
+//   input.classList.add(validationSettings.inputErrorClass);
+//   errorSpan.textContent = errorMessage;
+//   errorSpan.classList.add(validationSettings.errorClass);
+// };
 
-const hideInputError = (form, input) => {
-  const errorSpan = form.querySelector(`.${input.id}-error`);
-  input.classList.remove('popup__error');
-  errorSpan.classList.remove('popup__edit-error_active');
-  errorSpan.textContent = '';
-};
+// const hideInputError = (form, input, validationSettings) => {
+//   const errorSpan = form.querySelector(`.${input.id}-error`);
+//   input.classList.remove(validationSettings.inputErrorClass);
+//   errorSpan.classList.remove(validationSettings.errorClass);
+//   errorSpan.textContent = '';
+// };
 
 const clearError = (popup) => {
   const inputList = Array.from(popup.querySelectorAll('.popup__edit'));
@@ -135,46 +147,45 @@ const clearError = (popup) => {
   saveButton.classList.remove('popup__save-button_inactive');
 }
 
-const isValid = (form, input) => {
-  const saveButton = form.querySelector('.popup__save-button');
-  if (!input.validity.valid) {
-    showInputError(form, input, input.validationMessage);
-    saveButton.classList.add('popup__save-button_inactive');
-    saveButton.disabled = true;
-  } else {
-    hideInputError(form, input);
-    if (isAllInputValid(form)) {
-      saveButton.classList.remove('popup__save-button_inactive');
-      saveButton.disabled = false;
-    }
-  }
-};
+// const isValid = (form, input, validationSettings) => {
+//   const saveButton = form.querySelector(validationSettings.submitButtonSelector);
+//   if (!input.validity.valid) {
+//     showInputError(form, input, input.validationMessage, validationSettings);
+//     saveButton.classList.add(validationSettings.inactiveButtonClass);
+//     saveButton.disabled = true;
+//   } else {
+//     hideInputError(form, input);
+//     if (isAllInputValid(form)) {
+//       saveButton.classList.remove(validationSettings.inactiveButtonClass);
+//       saveButton.disabled = false;
+//     }
+//   }
+// };
 
-const isAllInputValid = (form) => {
-  const inputList = Array.from(form.querySelectorAll('.popup__edit'));
-  return inputList.every((input) => input.validity.valid);
-}  
+// const isAllInputValid = (form) => {
+//   const inputList = Array.from(form.querySelectorAll('.popup__edit'));
+//   return inputList.every((input) => input.validity.valid);
+// }  
  
-const setEventListeners = (form) => {
-  const inputList = Array.from(form.querySelectorAll('.popup__edit'));
+// const setEventListeners = (form, validationSettings) => {
+//   const inputList = Array.from(form.querySelectorAll(validationSettings.inputSelector));
 
-  inputList.forEach((input) => {
-    input.addEventListener('input', () => {
-      isValid(form, input)
-    });
-  });
-}; 
+//   inputList.forEach((input) => {
+//     input.addEventListener('input', () => {
+//       isValid(form, input, validationSettings)
+//     });
+//   });
+// }; 
 
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll('.popup__window'));
-
-  formList.forEach((form) => {
-    form.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
-    setEventListeners(form);
-  });
-};
+// const enableValidation = (validationSettings) => {
+//   const formList = Array.from(document.querySelectorAll(validationSettings.formSelector))
+//   formList.forEach((form) => {
+//     form.addEventListener('submit', (evt) => {
+//       evt.preventDefault();
+//     });
+//     setEventListeners(form, validationSettings);
+//   });
+// };
 
 formProfileElement.addEventListener('submit', formSubmitProfileHandler);
 editButton.addEventListener('click', openProfilePopup);  
@@ -183,8 +194,19 @@ formPlaceElement.addEventListener('submit', handleCardRendering)
 addButton.addEventListener('click', openPlacePopup);
 closePlaceButton.addEventListener('click', () => closePopup(popupPlaceElement));
 closePopupButton.addEventListener('click', () => closePopup(popupPicElement));
-formProfileElement.addEventListener('submit', function (evt) {
-  evt.preventDefault();
-});
 
-enableValidation();
+overlayList.forEach((overlay) => overlay.addEventListener('click', (event) => {
+  const isClosest = event.target.closest('.popup__container');
+  if (!isClosest) {
+    closePopup(overlay);
+  }
+}));
+
+enableValidation({
+  formSelector: '.popup__window',
+  inputSelector: '.popup__edit',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_inactive',
+  inputErrorClass: 'popup__error',
+  errorClass: 'popup__edit-error_active'
+}); 

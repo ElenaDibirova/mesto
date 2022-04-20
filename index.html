@@ -44,10 +44,10 @@
     </footer>
   </div>
 
-  <div class="popup popup_profile" novalidate>
+  <div class="popup popup_profile">
     <div class="popup__container">
       <button type="button" class="popup__close-button popup__close-button_profile"></button>
-      <form name="profile" class="popup__window popup__window_profile">
+      <form name="profile" class="popup__window popup__window_profile" novalidate>
         <h2 class="popup__title">Редактировать профиль</h2>
           <input 
             id="name-input" 
@@ -74,10 +74,10 @@
     </div>
   </div>
 
-  <div class="popup popup_place" novalidate>
+  <div class="popup popup_place">
     <div class="popup__container">
       <button type="button" class="popup__close-button popup__close-button_place"></button>
-      <form name="Add_new_place" class="popup__window popup__window_place">
+      <form name="Add_new_place" class="popup__window popup__window_place" novalidate>
         <h2 class="popup__title">Новое место</h2>
         <input 
           id="place-name"
@@ -113,6 +113,7 @@
   </div>
 
   <script src="./script/cards.js"></script>
+  <script src="./script/validate.js"></script>
   <script src="./script/index.js"></script>
 </body>
 </html>
