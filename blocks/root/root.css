@@ -1,5 +1,7 @@
 .root {
     background-color: black;
+    min-height: 100vh;
+    box-sizing: border-box;
     padding: 45px 0 60px;
     font-family: "Inter", "Arial", sans-serif;
     -moz-osx-font-smoothing: grayscale;

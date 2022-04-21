@@ -20,10 +20,12 @@ const popupPic = document.querySelector('.popup__image');
 const saveButton = document.querySelector('.popup__save-button');
 const ESC_KEY = "Escape";
 const overlayList = Array.from(document.querySelectorAll('.popup'));
+const popupName = document.querySelector('.popup__text');
 
-function onDocumentKeyUp (event, popup) {
-  if (event.key === ESC_KEY) {
-    closePopup(popup);
+function handleEscKey (evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   }
 }
 
@@ -37,15 +39,12 @@ const handleRemoveButton = (event) => {
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  document.addEventListener('keyup', (evt) => onDocumentKeyUp(evt, popup));
+  document.addEventListener('keydown', handleEscKey);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  if (!popup.classList.contains('popup_pic')) {
-    clearError(popup);
-  }
-  document.removeEventListener('keyup', (evt) => onDocumentKeyUp(evt, popup));
+  document.removeEventListener('keydown', handleEscKey);
 }
 
 elements.forEach(function(el) {
@@ -53,8 +52,6 @@ elements.forEach(function(el) {
 })
 
 function openPlacePopup() {
-  placeName.value = '';
-  placeLink.value = '';
   openPopup(popupPlaceElement);
 }
 
@@ -62,6 +59,7 @@ function openProfilePopup () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileBio.textContent;
   openPopup(popupProfileElement);
+  clearError(popupProfileElement);
 }
 
 function formSubmitProfileHandler (evt) {
@@ -69,6 +67,8 @@ function formSubmitProfileHandler (evt) {
   profileName.textContent = nameInput.value
   profileBio.textContent = jobInput.value
   closePopup(popupProfileElement);
+  placeName.value = '';
+  placeLink.value = '';
 }
 
 function createCard(srcValue, nameValue) {
@@ -77,7 +77,7 @@ function createCard(srcValue, nameValue) {
   const newCardImg = newCardElement.querySelector('.element__img');
   newCardImg.src = srcValue;
   newCardImg.alt = nameValue;
-  newCardImg.addEventListener('click', openPopupPic);
+  newCardImg.addEventListener('click', () => openPopupPic(srcValue, nameValue));
 
   const newCardName = newCardElement.querySelector('.element__name');
   newCardName.textContent = nameValue;
@@ -94,42 +94,26 @@ function createCard(srcValue, nameValue) {
 function handleCardRendering(evt) {
   evt.preventDefault();
   addCardToContainer(section, createCard(placeLink.value, placeName.value));
-  placeName.value = '';
-  placeLink.value = '';
   closePopup(popupPlaceElement);
+  formPlaceElement.reset();
+  evt.submitter.disabled = true;
+  evt.submitter.classList.add('popup__save-button_inactive');
 }
 
 function addCardToContainer(container, card) {
   container.prepend(card);
 }
 
-function openPopupPic(event) {  
-  popupPic.src = event.currentTarget.src;
-  popupPic.alt = event.currentTarget.alt;
-
-  const popupName = document.querySelector('.popup__text');
-  const divElement = event.currentTarget.closest('.element');
-  const nameElement = divElement.querySelector('.element__name');
-  popupName.textContent = nameElement.textContent;
+function openPopupPic(srcValue, nameValue) {  
+  popupPic.src = srcValue;
+  popupPic.alt = nameValue;
+  popupName.textContent = nameValue;
 
   openPopup(popupPicElement);
 }
 
+// удаление пустого шаблона карточки из разметки
 section.removeChild(cardTemplate);
-
-// const showInputError = (form, input, errorMessage, validationSettings) => {
-//   const errorSpan = form.querySelector(`.${input.id}-error`);
-//   input.classList.add(validationSettings.inputErrorClass);
-//   errorSpan.textContent = errorMessage;
-//   errorSpan.classList.add(validationSettings.errorClass);
-// };
-
-// const hideInputError = (form, input, validationSettings) => {
-//   const errorSpan = form.querySelector(`.${input.id}-error`);
-//   input.classList.remove(validationSettings.inputErrorClass);
-//   errorSpan.classList.remove(validationSettings.errorClass);
-//   errorSpan.textContent = '';
-// };
 
 const clearError = (popup) => {
   const inputList = Array.from(popup.querySelectorAll('.popup__edit'));
@@ -144,48 +128,9 @@ const clearError = (popup) => {
     errorSpan.textContent = '';
   });
   const saveButton = popup.querySelector('.popup__save-button');
-  saveButton.classList.remove('popup__save-button_inactive');
+  saveButton.classList.add('popup__save-button_inactive');
+  saveButton.disabled = true;
 }
-
-// const isValid = (form, input, validationSettings) => {
-//   const saveButton = form.querySelector(validationSettings.submitButtonSelector);
-//   if (!input.validity.valid) {
-//     showInputError(form, input, input.validationMessage, validationSettings);
-//     saveButton.classList.add(validationSettings.inactiveButtonClass);
-//     saveButton.disabled = true;
-//   } else {
-//     hideInputError(form, input);
-//     if (isAllInputValid(form)) {
-//       saveButton.classList.remove(validationSettings.inactiveButtonClass);
-//       saveButton.disabled = false;
-//     }
-//   }
-// };
-
-// const isAllInputValid = (form) => {
-//   const inputList = Array.from(form.querySelectorAll('.popup__edit'));
-//   return inputList.every((input) => input.validity.valid);
-// }  
- 
-// const setEventListeners = (form, validationSettings) => {
-//   const inputList = Array.from(form.querySelectorAll(validationSettings.inputSelector));
-
-//   inputList.forEach((input) => {
-//     input.addEventListener('input', () => {
-//       isValid(form, input, validationSettings)
-//     });
-//   });
-// }; 
-
-// const enableValidation = (validationSettings) => {
-//   const formList = Array.from(document.querySelectorAll(validationSettings.formSelector))
-//   formList.forEach((form) => {
-//     form.addEventListener('submit', (evt) => {
-//       evt.preventDefault();
-//     });
-//     setEventListeners(form, validationSettings);
-//   });
-// };
 
 formProfileElement.addEventListener('submit', formSubmitProfileHandler);
 editButton.addEventListener('click', openProfilePopup);  
