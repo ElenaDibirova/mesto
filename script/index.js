@@ -3,9 +3,6 @@ const popupPlaceElement = document.querySelector('.popup_place');
 const popupPicElement = document.querySelector('.popup_pic');
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
-const closeProfileButton = popupProfileElement.querySelector('.popup__close-button_profile');
-const closePlaceButton = popupPlaceElement.querySelector('.popup__close-button_place');
-const closePopupButton = popupPicElement.querySelector('.popup__close-button_pic');
 const formProfileElement = popupProfileElement.querySelector('.popup__window_profile');
 const formPlaceElement = popupPlaceElement.querySelector('.popup__window_place');
 const nameInput = formProfileElement.querySelector('.popup__edit_type_name');
@@ -21,6 +18,7 @@ const saveButton = document.querySelector('.popup__save-button');
 const ESC_KEY = "Escape";
 const overlayList = Array.from(document.querySelectorAll('.popup'));
 const popupName = document.querySelector('.popup__text');
+const closePopupButtons = Array.from(document.querySelectorAll('.popup__close-button'));
 
 function handleEscKey (evt) {
   if (evt.key === 'Escape') {
@@ -62,13 +60,11 @@ function openProfilePopup () {
   clearError(popupProfileElement);
 }
 
-function formSubmitProfileHandler (evt) {
+function handleProfileFormSubmit (evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value
   profileBio.textContent = jobInput.value
   closePopup(popupProfileElement);
-  placeName.value = '';
-  placeLink.value = '';
 }
 
 function createCard(srcValue, nameValue) {
@@ -95,7 +91,7 @@ function handleCardRendering(evt) {
   evt.preventDefault();
   addCardToContainer(section, createCard(placeLink.value, placeName.value));
   closePopup(popupPlaceElement);
-  formPlaceElement.reset();
+  evt.target.reset();
   evt.submitter.disabled = true;
   evt.submitter.classList.add('popup__save-button_inactive');
 }
@@ -132,13 +128,15 @@ const clearError = (popup) => {
   saveButton.disabled = true;
 }
 
-formProfileElement.addEventListener('submit', formSubmitProfileHandler);
+formProfileElement.addEventListener('submit', handleProfileFormSubmit);
 editButton.addEventListener('click', openProfilePopup);  
-closeProfileButton.addEventListener('click', () => closePopup(popupProfileElement));
 formPlaceElement.addEventListener('submit', handleCardRendering)
 addButton.addEventListener('click', openPlacePopup);
-closePlaceButton.addEventListener('click', () => closePopup(popupPlaceElement));
-closePopupButton.addEventListener('click', () => closePopup(popupPicElement));
+
+closePopupButtons.forEach((btn) => {
+  const popup = btn.closest('.popup');
+  btn.addEventListener('click', () => closePopup(popup));
+});
 
 overlayList.forEach((overlay) => overlay.addEventListener('click', (event) => {
   const isClosest = event.target.closest('.popup__container');
