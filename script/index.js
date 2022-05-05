@@ -27,14 +27,6 @@ function handleEscKey (evt) {
   }
 }
 
-const handleLikeButton = (event) => {
-  event.currentTarget.classList.toggle('element__like_active');
-}
-
-const handleRemoveButton = (event) => {
-  event.currentTarget.closest('.element').remove();
-}
-
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', handleEscKey);
@@ -44,10 +36,6 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', handleEscKey);
 }
-
-elements.forEach(function(el) {
-  addCardToContainer(section, createCard(el.link, el.name));
-})
 
 function openPlacePopup() {
   openPopup(popupPlaceElement);
@@ -65,26 +53,6 @@ function handleProfileFormSubmit (evt) {
   profileName.textContent = nameInput.value
   profileBio.textContent = jobInput.value
   closePopup(popupProfileElement);
-}
-
-function createCard(srcValue, nameValue) {
-  const newCardElement = cardTemplate.cloneNode(true);
-
-  const newCardImg = newCardElement.querySelector('.element__img');
-  newCardImg.src = srcValue;
-  newCardImg.alt = nameValue;
-  newCardImg.addEventListener('click', () => openPopupPic(srcValue, nameValue));
-
-  const newCardName = newCardElement.querySelector('.element__name');
-  newCardName.textContent = nameValue;
-
-  const likeBtn = newCardElement.querySelector('.element__like');
-  likeBtn.addEventListener('click', handleLikeButton);
-
-  const removeBtn = newCardElement.querySelector('.element__remove');
-  removeBtn.addEventListener('click', handleRemoveButton);
-
-  return newCardElement;
 }
 
 function handleCardRendering(evt) {
@@ -107,9 +75,6 @@ function openPopupPic(srcValue, nameValue) {
 
   openPopup(popupPicElement);
 }
-
-// удаление пустого шаблона карточки из разметки
-section.removeChild(cardTemplate);
 
 const clearError = (popup) => {
   const inputList = Array.from(popup.querySelectorAll('.popup__edit'));
@@ -145,11 +110,21 @@ overlayList.forEach((overlay) => overlay.addEventListener('click', (event) => {
   }
 }));
 
-enableValidation({
-  formSelector: '.popup__window',
-  inputSelector: '.popup__edit',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup__save-button_inactive',
-  inputErrorClass: 'popup__error',
-  errorClass: 'popup__edit-error_active'
-}); 
+import Card from './Card.js';
+import { elements } from './cards.js';
+
+
+elements.forEach((item) => {
+  const card = new Card(item, '.element__template', openPopupPic);
+  const cardElement = card.generateCard();
+  section.append(cardElement);
+});
+
+// enableValidation({
+//   formSelector: '.popup__window',
+//   inputSelector: '.popup__edit',
+//   submitButtonSelector: '.popup__save-button',
+//   inactiveButtonClass: 'popup__save-button_inactive',
+//   inputErrorClass: 'popup__error',
+//   errorClass: 'popup__edit-error_active'
+// });

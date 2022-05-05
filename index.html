@@ -27,14 +27,16 @@
     </section>
 
     <section aria-label="Foto" class="elements">
-      <div class="element">
-        <button type="button" class="element__remove"></button>
-        <img src="#" alt="" class="element__img">
-        <div class="element__info">
-          <h2 class="element__name"></h2>
-          <button type="button" class="element__like"></button>
+      <template class="element__template">
+        <div class="element">
+          <button type="button" class="element__remove"></button>
+          <img src="#" alt="" class="element__img">
+          <div class="element__info">
+            <h2 class="element__name"></h2>
+            <button type="button" class="element__like"></button>
+          </div>
         </div>
-      </div>
+    </template>
     </section>
 
     </main>
@@ -112,8 +114,9 @@
     </div>
   </div>
 
-  <script src="./script/cards.js"></script>
-  <script src="./script/validate.js"></script>
-  <script src="./script/index.js"></script>
+  <script type="module" src="./script/cards.js"></script>
+  <script type="module" src="./script/Card.js"></script>
+  <script type="module" src="./script/validate.js"></script>
+  <script type="module" src="./script/index.js"></script>
 </body>
 </html>
