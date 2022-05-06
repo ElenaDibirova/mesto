@@ -1,4 +1,4 @@
-export default class Card {
+export class Card {
   constructor(data, templateSelector, openPopupFunction) {
     this._name = data.name;
     this._link = data.link;
@@ -15,15 +15,6 @@ export default class Card {
   
     return cardElement;
   }
-
-  // _getImageElement() {
-  //   const imageElement = document
-  //     .querySelector(this._templateSelector)
-  //     .content
-  //     .querySelector('.element__img')
-
-  //   return imageElement;
-  // }
 
   generateCard() {
     this._element = this._getTemplate();
@@ -53,7 +44,6 @@ export default class Card {
     const likeBtn = this._element.querySelector('.element__like');
     const removeBtn = this._element.querySelector('.element__remove');
     const imageElement = this._element.querySelector('.element__img');
-
 
     likeBtn.addEventListener('click', this._handleLikeButton);
     removeBtn.addEventListener('click', this._handleRemoveButton);
