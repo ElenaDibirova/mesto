@@ -1,3 +1,16 @@
+import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
+import { elements } from './cards.js';
+
+const validationSettings = {
+  formSelector: '.popup__window',
+  inputSelector: '.popup__edit',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_inactive',
+  inputErrorClass: 'popup__error',
+  errorClass: 'popup__edit-error_active',
+  editError: '.popup__edit-error'
+}
 const popupProfileElement = document.querySelector('.popup_profile');
 const popupPlaceElement = document.querySelector('.popup_place');
 const popupPicElement = document.querySelector('.popup_pic');
@@ -16,11 +29,11 @@ const popupPic = document.querySelector('.popup__image');
 const overlayList = Array.from(document.querySelectorAll('.popup'));
 const popupName = document.querySelector('.popup__text');
 const closePopupButtons = Array.from(document.querySelectorAll('.popup__close-button'));
+const profileValidation = new FormValidator(validationSettings, formProfileElement);
+const newCardValidation = new FormValidator(validationSettings, formPlaceElement);
 
-import { Card } from './Card.js';
-import { FormValidator } from './FormValidator.js';
-import { elements } from './cards.js';
-
+profileValidation.enableValidation();
+newCardValidation.enableValidation();
 
 function handleEscKey (evt) {
   if (evt.key === 'Escape') {
@@ -46,8 +59,8 @@ function openPlacePopup() {
 function openProfilePopup () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileBio.textContent;
+  profileValidation.clearError();
   openPopup(popupProfileElement);
-  clearError(popupProfileElement);
 }
 
 function handleProfileFormSubmit (evt) {
@@ -57,21 +70,7 @@ function handleProfileFormSubmit (evt) {
   closePopup(popupProfileElement);
 }
 
-function handleCardRendering(evt) {
-  evt.preventDefault();
-  const newData = {
-    link: placeLink.value,
-    name: placeName.value
-  }
-  const newCard = new Card(newData, '.element__template', openPopupPic);
-  addCardToContainer(section, newCard.generateCard());
-  closePopup(popupPlaceElement);
-  evt.target.reset();
-  evt.submitter.disabled = true;
-  evt.submitter.classList.add('popup__save-button_inactive');
-}
-
-function addCardToContainer(container, card) {
+function prependCardToContainer(container, card) {
   container.prepend(card);
 }
 
@@ -83,27 +82,28 @@ function openPopupPic(srcValue, nameValue) {
   openPopup(popupPicElement);
 }
 
-const clearError = (popup) => {
-  const inputList = Array.from(popup.querySelectorAll('.popup__edit'));
-  const errorSpanList = Array.from(popup.querySelectorAll('.popup__edit-error'));
-
-  inputList.forEach((input) => {
-    input.classList.remove('popup__error');
-  });
-
-  errorSpanList.forEach((errorSpan) => {
-    errorSpan.classList.add('popup__edit-error_active');
-    errorSpan.textContent = '';
-  });
-  const saveButton = popup.querySelector('.popup__save-button');
-  saveButton.classList.add('popup__save-button_inactive');
-  saveButton.disabled = true;
+function generateCardTemplate(item) {
+  const card = new Card(item, '.element__template', openPopupPic);
+  const cardElement = card.generateCard();
+  return cardElement;
 }
 
-formProfileElement.addEventListener('submit', handleProfileFormSubmit);
-editButton.addEventListener('click', openProfilePopup);  
-formPlaceElement.addEventListener('submit', handleCardRendering)
-addButton.addEventListener('click', openPlacePopup);
+function appendCardToContainer(container, card) {
+  container.append(card);
+}
+
+function handleCardRendering(evt) {
+  evt.preventDefault();
+  const newData = {
+    link: placeLink.value,
+    name: placeName.value
+  }
+  
+  prependCardToContainer(section, generateCardTemplate(newData));
+  closePopup(popupPlaceElement);
+
+  newCardValidation.disableSubmitButton(evt);
+}
 
 closePopupButtons.forEach((btn) => {
   const popup = btn.closest('.popup');
@@ -117,23 +117,11 @@ overlayList.forEach((overlay) => overlay.addEventListener('click', (event) => {
   }
 }));
 
-const validationSettings = {
-  formSelector: '.popup__window',
-  inputSelector: '.popup__edit',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup__save-button_inactive',
-  inputErrorClass: 'popup__error',
-  errorClass: 'popup__edit-error_active'
-}
-
 elements.forEach((item) => {
-  const card = new Card(item, '.element__template', openPopupPic);
-  const cardElement = card.generateCard();
-  section.append(cardElement);
+  appendCardToContainer(section, generateCardTemplate(item));
 });
 
-const formList = Array.from(document.querySelectorAll('.popup__window'));
-formList.forEach((form) => {
-  const formValidator = new FormValidator(validationSettings, form);
-  formValidator.enableValidation();
-});
+formProfileElement.addEventListener('submit', handleProfileFormSubmit);
+editButton.addEventListener('click', openProfilePopup);  
+formPlaceElement.addEventListener('submit', handleCardRendering)
+addButton.addEventListener('click', openPlacePopup);
