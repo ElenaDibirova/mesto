@@ -17,14 +17,15 @@ export class Card {
   }
 
   generateCard() {
-    this._element = this._getTemplate();
-    this._setEventListeners();
-  
-    const elementImg = this._element.querySelector('.element__img'); 
+    this._element = this._getTemplate();   
     this._element.querySelector('.element__name').textContent = this._name;
-    elementImg.src = this._link;
-    elementImg.alt = this._name;
-  
+
+    this._elementImg = this._element.querySelector('.element__img');
+    this._elementImg.src = this._link;
+    this._elementImg.alt = this._name;
+
+    this._setEventListeners();
+
     return this._element;
   }
   
@@ -32,21 +33,21 @@ export class Card {
     event.currentTarget.closest('.element').remove();
   }
 
-  _handleLikeButton = (event) => {
-    event.currentTarget.classList.toggle('element__like_active');
+  _handleLikeButton = () => {
+    this._likeBtn.classList.toggle('element__like_active');
   }
 
-  _handleRemoveButton = (event) => {
-    event.currentTarget.closest('.element').remove();
+  _handleRemoveButton = () => {
+    this._element.remove();
+    this._element = null;
   }
 
   _setEventListeners() {
-    const likeBtn = this._element.querySelector('.element__like');
+    this._likeBtn = this._element.querySelector('.element__like');
     const removeBtn = this._element.querySelector('.element__remove');
-    const imageElement = this._element.querySelector('.element__img');
 
-    likeBtn.addEventListener('click', this._handleLikeButton);
+    this._likeBtn.addEventListener('click', this._handleLikeButton);
     removeBtn.addEventListener('click', this._handleRemoveButton);
-    imageElement.addEventListener('click', () => this._openPopupFunction(this._link, this._name));
+    this._elementImg.addEventListener('click', () => this._openPopupFunction(this._link, this._name));
   }
 }
