@@ -28,7 +28,6 @@ const section = document.querySelector('.elements');
 const popupPic = document.querySelector('.popup__image');
 const overlayList = Array.from(document.querySelectorAll('.popup'));
 const popupName = document.querySelector('.popup__text');
-const closePopupButtons = Array.from(document.querySelectorAll('.popup__close-button'));
 const profileValidation = new FormValidator(validationSettings, formProfileElement);
 const newCardValidation = new FormValidator(validationSettings, formPlaceElement);
 
@@ -105,14 +104,11 @@ function handleCardRendering(evt) {
   newCardValidation.disableSubmitButton(evt);
 }
 
-closePopupButtons.forEach((btn) => {
-  const popup = btn.closest('.popup');
-  btn.addEventListener('click', () => closePopup(popup));
-});
-
 overlayList.forEach((overlay) => overlay.addEventListener('click', (event) => {
   const isClosest = event.target.closest('.popup__container');
-  if (!isClosest) {
+  const isCloseBtn = event.target.classList.contains('popup__close-button');
+
+  if (!isClosest || isCloseBtn) {
     closePopup(overlay);
   }
 }));

@@ -11,6 +11,7 @@ export class FormValidator {
 
     this._formElement = formElement;
     this._saveButton = this._formElement.querySelector(this._submitButtonSelector);
+    this._errorSpanList = Array.from(this._formElement.querySelectorAll(this._editError));
   }
   // включает валидацию формы
   enableValidation() {
@@ -48,8 +49,7 @@ export class FormValidator {
   }
 
   _isAllInputValid = () => {
-    const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    return inputList.every((input) => input.validity.valid);
+    return this._inputList.every((input) => input.validity.valid);
   };
   
   _showInputError = (input) => {
@@ -73,19 +73,15 @@ export class FormValidator {
   }
 
   clearError = () => {
-    const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    const errorSpanList = Array.from(this._formElement.querySelectorAll(this._editError));
-  
-    inputList.forEach((input) => {
+    this._inputList.forEach((input) => {
       input.classList.remove(this._inputErrorClass);
     });
   
-    errorSpanList.forEach((errorSpan) => {
+    this._errorSpanList.forEach((errorSpan) => {
       errorSpan.classList.add(this._errorClass);
       errorSpan.textContent = '';
     });
-    const saveButton = this._formElement.querySelector(this._submitButtonSelector);
-    saveButton.classList.add(this._inactiveButtonClass);
-    saveButton.disabled = true;
+    this._saveButton.classList.add(this._inactiveButtonClass);
+    this._saveButton.disabled = true;
   }
 }
