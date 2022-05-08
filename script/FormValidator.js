@@ -10,6 +10,7 @@ export class FormValidator {
     this._editError = formSettings._editError;
 
     this._formElement = formElement;
+    this._saveButton = this._formElement.querySelector(this._submitButtonSelector);
   }
   // включает валидацию формы
   enableValidation() {
@@ -21,25 +22,29 @@ export class FormValidator {
   }
 
   _setEventListeners() {
-    const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    inputList.forEach((input) => input.addEventListener('input', () => {
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._inputList.forEach((input) => input.addEventListener('input', () => {
       this._isValid(input);
+      this._handleSaveButton(input);
     }));
   }
 
   _isValid(input) {
-    const saveButton = this._formElement.querySelector(this._submitButtonSelector);
     if (!input.validity.valid) {
       this._showInputError(input);
-      saveButton.classList.add(this._inactiveButtonClass);
-      saveButton.disabled = true;
     } else {
-      this._hideInputError(input);
-      if (this._isAllInputValid()) {
-        saveButton.classList.remove(this._inactiveButtonClass);
-        saveButton.disabled = false;
+        this._hideInputError(input);
       }
-    }
+  }
+
+  _handleSaveButton(input) {
+    if (!input.validity.valid) {
+      this._saveButton.classList.add(this._inactiveButtonClass);
+      this._saveButton.disabled = true;
+    } else if(this._isAllInputValid()) {
+          this._saveButton.classList.remove(this._inactiveButtonClass);
+          this._saveButton.disabled = false;
+      }
   }
 
   _isAllInputValid = () => {
