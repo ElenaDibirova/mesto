@@ -11,7 +11,8 @@ export class FormValidator {
 
     this._formElement = formElement;
     this._saveButton = this._formElement.querySelector(this._submitButtonSelector);
-    this._errorSpanList = Array.from(this._formElement.querySelectorAll(this._editError));
+    this._errorSpanList = this._formElement.querySelectorAll(this._editError);
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
   }
   // включает валидацию формы
   enableValidation() {
@@ -23,8 +24,7 @@ export class FormValidator {
   }
 
   _setEventListeners() {
-    this._inputList = this._formElement.querySelectorAll(this._inputSelector);
-    this._inputList.forEach((input) => input.addEventListener('input', () => {
+      this._inputList.forEach((input) => input.addEventListener('input', () => {
       this._isValid(input);
       this._handleSaveButton(input);
     }));
