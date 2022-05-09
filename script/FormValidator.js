@@ -23,7 +23,7 @@ export class FormValidator {
   }
 
   _setEventListeners() {
-    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._inputList = this._formElement.querySelectorAll(this._inputSelector);
     this._inputList.forEach((input) => input.addEventListener('input', () => {
       this._isValid(input);
       this._handleSaveButton(input);
@@ -38,13 +38,13 @@ export class FormValidator {
       }
   }
 
-  _handleSaveButton(input) {
-    if (!input.validity.valid) {
+  _handleSaveButton() {
+    if (!this._isAllInputValid()) {
       this._saveButton.classList.add(this._inactiveButtonClass);
       this._saveButton.disabled = true;
-    } else if(this._isAllInputValid()) {
-          this._saveButton.classList.remove(this._inactiveButtonClass);
-          this._saveButton.disabled = false;
+    } else {
+        this._saveButton.classList.remove(this._inactiveButtonClass);
+        this._saveButton.disabled = false;
       }
   }
 
@@ -66,22 +66,15 @@ export class FormValidator {
     errorSpan.textContent = '';
   };
 
-  disableSubmitButton(evt) {
-    evt.target.reset();
-    evt.submitter.disabled = true;
-    evt.submitter.classList.add(this._inactiveButtonClass);
-  }
-
   clearError = () => {
     this._inputList.forEach((input) => {
-      input.classList.remove(this._inputErrorClass);
+      this._hideInputError(input);
     });
   
     this._errorSpanList.forEach((errorSpan) => {
       errorSpan.classList.add(this._errorClass);
       errorSpan.textContent = '';
     });
-    this._saveButton.classList.add(this._inactiveButtonClass);
-    this._saveButton.disabled = true;
+    this._handleSaveButton();
   }
 }

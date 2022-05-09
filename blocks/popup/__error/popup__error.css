@@ -1,3 +1,6 @@
 .popup__error {
   border-bottom-color: red;
+  display: flex;
+  justify-content: center;
+  max-width: 362px;
 }

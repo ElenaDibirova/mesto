@@ -52,6 +52,9 @@ function closePopup(popup) {
 }
 
 function openPlacePopup() {
+  // Если пользователь закрыл попап случайно,
+  // то очистка формы и ошибок не нужна, чтобы не вводить заполненные данные снова.
+  // Очистка происходит только после нажатия на Submit.
   openPopup(popupPlaceElement);
 }
 
@@ -97,11 +100,8 @@ function handleCardRendering(evt) {
     link: placeLink.value,
     name: placeName.value
   }
-  
   prependCardToContainer(section, generateCardTemplate(newData));
   closePopup(popupPlaceElement);
-
-  newCardValidation.disableSubmitButton(evt);
 }
 
 overlayList.forEach((overlay) => overlay.addEventListener('click', (event) => {
@@ -118,6 +118,10 @@ elements.forEach((item) => {
 });
 
 formProfileElement.addEventListener('submit', handleProfileFormSubmit);
-editButton.addEventListener('click', openProfilePopup);  
-formPlaceElement.addEventListener('submit', handleCardRendering)
+editButton.addEventListener('click', openProfilePopup); 
+formPlaceElement.addEventListener('submit', (evt) => {
+  handleCardRendering(evt);
+  newCardValidation.clearError();
+  evt.target.reset();
+});
 addButton.addEventListener('click', openPlacePopup);

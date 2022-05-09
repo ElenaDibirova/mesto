@@ -4,6 +4,8 @@
   border-color: #000000;
   color: #000000;
   opacity: 0.2;
+  box-sizing: content-box;
+  max-height: 54px;
 }
 
 .popup__save-button_inactive:hover {

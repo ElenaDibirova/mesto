@@ -1,7 +1,6 @@
 .popup__edit-error_active {
 display: flex;
 align-self: flex-start;
-margin-left: 34px;
 color: red;
 visibility: visible;
 font-size: 12px;

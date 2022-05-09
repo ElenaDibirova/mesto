@@ -28,10 +28,6 @@ export class Card {
 
     return this._element;
   }
-  
-  handleOpenedImage(event) {  
-    event.currentTarget.closest('.element').remove();
-  }
 
   _handleLikeButton = () => {
     this._likeBtn.classList.toggle('element__like_active');

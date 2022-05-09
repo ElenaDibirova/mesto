@@ -11,6 +11,7 @@
   text-decoration-color: white;
   border-radius: 2px;
   padding: 16px 0;
+  max-height: 54px;
 }
 
 .popup__save-button:hover {
