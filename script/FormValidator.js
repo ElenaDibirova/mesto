@@ -71,10 +71,6 @@ export class FormValidator {
       this._hideInputError(input);
     });
   
-    this._errorSpanList.forEach((errorSpan) => {
-      errorSpan.classList.add(this._errorClass);
-      errorSpan.textContent = '';
-    });
     this._handleSaveButton();
   }
 }

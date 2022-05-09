@@ -121,7 +121,7 @@ formProfileElement.addEventListener('submit', handleProfileFormSubmit);
 editButton.addEventListener('click', openProfilePopup); 
 formPlaceElement.addEventListener('submit', (evt) => {
   handleCardRendering(evt);
+  formPlaceElement.reset();
   newCardValidation.clearError();
-  evt.target.reset();
 });
 addButton.addEventListener('click', openPlacePopup);
